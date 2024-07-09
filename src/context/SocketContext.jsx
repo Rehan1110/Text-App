@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import io from "socket.io-client";
@@ -15,7 +16,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("http://localhost:4002", {
+      const socket = io("https://text-app-backend-zu0v.onrender.com", {
         query: {
           userId: authUser.user._id,
         },
