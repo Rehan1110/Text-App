@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 function Signup() {
-  const [authUser, setAuthUser] = useAuth();
+  const [, setAuthUser] = useAuth();
   const {
     register,
     handleSubmit,
@@ -15,7 +15,6 @@ function Signup() {
 
   // watch the password and confirm password fields
   const password = watch("password", "");
-  const confirmPassword = watch("confirmPassword", "");
 
   const validatePasswordMatch = (value) => {
     return value === password || "Passwords do not match";
@@ -30,7 +29,7 @@ function Signup() {
     };
     // console.log(userInfo);
     await axios
-      .post("/api/user/signup", userInfo)
+      .post("https://text-app-backend-zu0v.onrender.com/api/user/signup", userInfo)
       .then((response) => {
         if (response.data) {
           toast.success("Signup successful");
