@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3001,
     proxy: {
       "/api": {
-        target: "https://text-app-backend-zu0v.onrender.com",
+        target: "http://localhost:4002",
         changeOrigin: true,
       },
     },

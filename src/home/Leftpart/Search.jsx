@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import useGetAllUsers from "../../context/useGetAllUsers";
 import useConversation from "../../zustand/useConversation";

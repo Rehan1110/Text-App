@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
+import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -9,7 +9,7 @@ function Logout() {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("https://text-app-backend-zu0v.onrender.com/api/user/logout");
+      const res = await axios.post("/api/user/logout");
       localStorage.removeItem("ChatApp");
       Cookies.remove("jwt");
       setLoading(false);

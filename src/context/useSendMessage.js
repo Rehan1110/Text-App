@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import useConversation from "../zustand/useConversation.js";
 import axios from "axios";
 const useSendMessage = () => {
@@ -8,7 +8,7 @@ const useSendMessage = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `https://text-app-backend-zu0v.onrender.com/api/message/send/${selectedConversation._id}`,
+        `/api/message/send/${selectedConversation._id}`,
         { message }
       );
       setMessage([...messages, res.data]);

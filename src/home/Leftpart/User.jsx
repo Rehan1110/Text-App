@@ -1,12 +1,10 @@
-/* eslint-disable react/prop-types */
-
+import React from "react";
 import useConversation from "../../zustand/useConversation.js";
 import { useSocketContext } from "../../context/SocketContext.jsx";
 
 function User({ user }) {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === user._id;
-  // eslint-disable-next-line no-unused-vars
   const { socket, onlineUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(user._id);
   return (

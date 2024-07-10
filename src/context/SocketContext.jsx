@@ -1,11 +1,9 @@
-/* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import io from "socket.io-client";
 const socketContext = createContext();
 
 // it is a hook.
-// eslint-disable-next-line react-refresh/only-export-components
 export const useSocketContext = () => {
   return useContext(socketContext);
 };
@@ -17,7 +15,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://text-app-backend-zu0v.onrender.com", {
+      const socket = io("http://localhost:4002", {
         query: {
           userId: authUser.user._id,
         },
@@ -33,7 +31,7 @@ export const SocketProvider = ({ children }) => {
         setSocket(null);
       }
     }
-  }, [authUser, socket]);
+  }, [authUser]);
   return (
     <socketContext.Provider value={{ socket, onlineUsers }}>
       {children}
