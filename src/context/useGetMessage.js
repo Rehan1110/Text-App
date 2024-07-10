@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import useConversation from "../zustand/useConversation.js";
 import axios from "axios";
 const useGetMessage = () => {
@@ -11,7 +11,7 @@ const useGetMessage = () => {
       if (selectedConversation && selectedConversation._id) {
         try {
           const res = await axios.get(
-            `/api/message/get/${selectedConversation._id}`
+            `https://text-app-backend-zu0v.onrender.com/message/get/${selectedConversation._id}`
           );
           setMessage(res.data);
           setLoading(false);

@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
@@ -21,7 +20,7 @@ function Login() {
     };
     // console.log(userInfo);
     axios
-      .post("/api/user/login", userInfo)
+      .post("https://text-app-backend-zu0v.onrender.com/user/login", userInfo)
       .then((response) => {
         if (response.data) {
           toast.success("Login successful");

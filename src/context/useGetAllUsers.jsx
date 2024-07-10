@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 function useGetAllUsers() {
@@ -9,7 +9,7 @@ function useGetAllUsers() {
       setLoading(true);
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("/api/user/allusers", {
+        const response = await axios.get("https://text-app-backend-zu0v.onrender.com/user/allusers", {
           credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,

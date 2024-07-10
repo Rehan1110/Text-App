@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 function Logout() {
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("/api/user/logout");
+      // eslint-disable-next-line no-unused-vars
+      const res = await axios.post("https://text-app-backend-zu0v.onrender.com/user/logout");
       localStorage.removeItem("ChatApp");
       Cookies.remove("jwt");
       setLoading(false);
