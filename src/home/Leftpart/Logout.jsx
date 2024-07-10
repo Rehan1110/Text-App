@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import Cookies from "js-cookie";

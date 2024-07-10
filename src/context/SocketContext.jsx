@@ -5,6 +5,7 @@ import io from "socket.io-client";
 const socketContext = createContext();
 
 // it is a hook.
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSocketContext = () => {
   return useContext(socketContext);
 };
@@ -32,7 +33,7 @@ export const SocketProvider = ({ children }) => {
         setSocket(null);
       }
     }
-  }, [authUser]);
+  }, [authUser, socket]);
   return (
     <socketContext.Provider value={{ socket, onlineUsers }}>
       {children}
