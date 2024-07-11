@@ -31,7 +31,9 @@ app.use("/api/message", messageRoute);
 
 //Deployment
 
-if (process.env.NODE_ENV === "production") {
+let NODE = "production";
+
+if (NODE === "production") {
     const dirPath = path.resolve();
 
     app.use(express.static("./FrontEnd/dist"));
