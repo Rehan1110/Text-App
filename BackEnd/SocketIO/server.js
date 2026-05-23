@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://text-app-brfj.onrender.com",
+    origin: "https://text-app-8ycm.onrender.com/",
     methods: ["GET", "POST"],
   },
 });

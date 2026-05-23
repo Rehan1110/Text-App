@@ -13,17 +13,21 @@ dotenv.config();
 // middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
 
 const PORT = process.env.PORT || 3001;
 const URI = process.env.MONGODB_URI;
 
-try {
-    mongoose.connect(URI);
-    console.log("Connected to MongoDB");
-} catch (error) {
-    console.log(error);
-}
+const connectDB = async () => {
+  try {
+    await mongoose.connect(URI);
+    console.log("✅ Connected to MongoDB");
+  } catch (error) {
+    console.error("MongoDB Connection Error:", error.message);
+  }
+};
+
+connectDB();
 
 //routes
 app.use("/api/user", userRoute);

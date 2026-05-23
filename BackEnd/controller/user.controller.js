@@ -1,55 +1,37 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import createTokenAndSaveCookie from "../jwt/generateToken.js";
+
 export const signup = async (req, res) => {
-  const { fullname, email, password, confirmPassword } = req.body;
+  const { fullname, email, password, confirmPassword, avatar } = req.body;
   try {
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
     }
+
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ error: "User already registered" });
     }
-    // Hashing the password
+
     const hashPassword = await bcrypt.hash(password, 10);
-    const newUser = await new User({
+    const newUser = new User({
       fullname,
       email,
       password: hashPassword,
+      avatar,
     });
+
     await newUser.save();
-    if (newUser) {
-      createTokenAndSaveCookie(newUser._id, res);
-      res.status(201).json({
-        message: "User created successfully",
-        user: {
-          _id: newUser._id,
-          fullname: newUser.fullname,
-          email: newUser.email,
-        },
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-export const login = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!user || !isMatch) {
-      return res.status(400).json({ error: "Invalid user credential" });
-    }
-    createTokenAndSaveCookie(user._id, res);
+
+    createTokenAndSaveCookie(newUser._id, res);
     res.status(201).json({
-      message: "User logged in successfully",
+      message: "User created successfully",
       user: {
-        _id: user._id,
-        fullname: user.fullname,
-        email: user.email,
+        _id: newUser._id,
+        fullname: newUser.fullname,
+        email: newUser.email,
+        avatar: newUser.avatar,
       },
     });
   } catch (error) {
@@ -57,6 +39,68 @@ export const login = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid user credential" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid user credential" });
+    }
+
+    createTokenAndSaveCookie(user._id, res);
+    res.status(201).json({
+      message: "User logged in successfully",
+      user: {
+        _id: user._id,
+        fullname: user.fullname,
+        email: user.email,
+        avatar: user.avatar,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const updateAvatar = async (req, res) => {
+  const { avatar } = req.body;
+  try {
+    if (!avatar) {
+      return res.status(400).json({ error: "Avatar is required" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { avatar },
+      { new: true }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Avatar updated successfully",
+      user: {
+        _id: updatedUser._id,
+        fullname: updatedUser.fullname,
+        email: updatedUser.email,
+        avatar: updatedUser.avatar,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 export const logout = async (req, res) => {
   try {
     res.clearCookie("jwt");
